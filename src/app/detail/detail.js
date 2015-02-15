@@ -4,14 +4,15 @@ angular.module('ngBoilerplate.detail', [
   'ngFacebook',
   'infinite-scroll'
 ])
-.controller('DetailCtrl', function DetailController($scope, $http, $modal, $log, $facebook, $stateParams, Reddit, $state) {
+.controller('DetailCtrl', function DetailController($scope, $http, $modal, $log, $facebook, $stateParams, Reddit, $state, apiServerRoot) {
   $scope.reddit = new Reddit($stateParams.topicId);
   $scope.topicId = $stateParams.topicId;
 
   $scope.fetchPosts = function() {
     console.log('fetchPosts');
 
-    $http.get('http://localhost:3000/topics/' + $stateParams.topicId + '.json')
+    $http.get(apiServerRoot + '/topics/' + $stateParams.topicId + '.json')
+    //$http.get('https://fb-bbs-server.herokuapp.com/topics/' + $stateParams.topicId + '.json')
     .success(function(data) {
       $scope.topic = data;
     })
@@ -69,7 +70,8 @@ angular.module('ngBoilerplate.detail', [
       var imgUrl = photo ? photo.picture : '';
       var imgId = photo ? photo.id : '';
 
-      $http.post('http://localhost:3000/posts.json', {
+      $http.post(apiServerRoot + '/posts.json', {
+      //$http.post('https://fb-bbs-server.herokuapp.com/posts.json', {
         post: {
         topic_id: $scope.topicId,
         content: $scope.postContent,
@@ -110,7 +112,8 @@ angular.module('ngBoilerplate.detail', [
     }
     this.busy = true;
 
-    $http.get('http://localhost:3000/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
+    $http.get(apiServerRoot + '/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
+    //$http.get('https://fb-bbs-server.herokuapp.com/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
     .success(function(data) {
       console.log(data);
       for (var i = 0; i < data.length; i++) {

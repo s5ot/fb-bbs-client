@@ -7,7 +7,7 @@ angular.module('ngBoilerplate.home', [
 .config(function config( $stateProvider ) {
 })
 
-.controller('HomeCtrl', function HomeController($scope, $http, $modal, $log, $facebook) {
+.controller('HomeCtrl', function HomeController($scope, $http, $modal, $log, $facebook, apiServerRoot) {
   $scope.openAlbum = function(size) {
     $facebook.api('/me/albums').then(
      function(data) {
@@ -37,7 +37,8 @@ angular.module('ngBoilerplate.home', [
   $scope.createTopic = function(topicTitle, postContent) {
     var imgUrl = $scope.choosedPhoto ? $scope.choosedPhoto.picture : '';
     var imgId = $scope.choosedPhoto ? $scope.choosedPhoto.id : '';
-    $http.post('http://localhost:3000/topics.json', {
+    $http.post(apiServerRoot + '/topics.json', {
+    //$http.post('https://fb-bbs-server.herokuapp.com/topics.json', {
       topic: {
         title: topicTitle,
         user_id: $scope.userId,
@@ -101,7 +102,7 @@ angular.module('ngBoilerplate.home', [
   };
 })
 
-.controller('TopicCtrl', function HomeController($scope, $http, $modal, $log, $facebook, Reddit, $stateParams, $state) {
+.controller('TopicCtrl', function HomeController($scope, $http, $modal, $log, $facebook, Reddit, $stateParams, $state, apiServerRoot) {
 
   if ($stateParams.topicId) {
     $scope.reddit = new Reddit($stateParams.topicId);
@@ -111,7 +112,8 @@ angular.module('ngBoilerplate.home', [
   $scope.fetchPosts = function() {
     console.log('fetchPosts');
 
-    $http.get('http://localhost:3000/topics/' + $scope.topicId + '.json')
+    $http.get(apiServerRoot + '/topics/' + $scope.topicId + '.json')
+    //$http.get('https://fb-bbs-server.herokuapp.com/topics/' + $scope.topicId + '.json')
     .success(function(data) {
       $scope.topic = data;
     })
@@ -169,7 +171,8 @@ angular.module('ngBoilerplate.home', [
       var imgUrl = photo ? photo.picture : '';
       var imgId = photo ? photo.id : '';
 
-      $http.post('http://localhost:3000/posts.json', {
+      $http.post(apiServerRoot + '/posts.json', {
+      //$http.post('https://fb-bbs-server.herokuapp.com/posts.json', {
         post: {
         topic_id: $scope.topicId,
         content: $scope.postContent,
@@ -179,6 +182,7 @@ angular.module('ngBoilerplate.home', [
         }
       }).
       success(function(data, status, headers, config) {
+        console.log(data);
         $scope.fetchTopics();
         if ($scope.fetchPosts) {
           $scope.fetchPosts();
@@ -198,7 +202,9 @@ angular.module('ngBoilerplate.home', [
   $scope.createTopic = function(topicTitle, postContent) {
     var imgUrl = $scope.choosedPhoto ? $scope.choosedPhoto.picture : '';
     var imgId = $scope.choosedPhoto ? $scope.choosedPhoto.id : '';
-    $http.post('http://localhost:3000/topics.json', {
+
+    $http.post(apiServerRoot + '/topics.json', {
+    //$http.post('https://fb-bbs-server.herokuapp.com/topics.json', {
       topic: {
         title: topicTitle,
         user_id: $scope.userId,
@@ -222,35 +228,6 @@ angular.module('ngBoilerplate.home', [
   };
 
   $scope.fetchPosts = function() {
-    /*
-    console.log('fetchPosts');
-    $http.get('http://localhost:3000/topics/' + $stateParams.topicId + '.json')
-    .success(function(data) {
-      $scope.topic = data;
-
-      if (!$scope.page) {
-        $scope.page = 1;
-      } else {
-        $scope.page += 1;
-      }
-      if (!$scope.topic.posts) {
-        $scope.topic.posts =[];
-      }
-
-      $http.get('http://localhost:3000/posts.json?' + 'topic_id=' + $stateParams.topicId + '&page=' + $scope.page)
-      .success(function(data) {
-        angular.forEach(data, function(p) {
-          $scope.topic.posts.push(p);
-        });
-      })
-      .error(function(data) {
-        console.error(data);
-      });
-    })
-    .error(function(data) {
-      console.error(data);
-    });
-    */
   };
 })
 .factory('Reddit', function($http) {
@@ -268,7 +245,8 @@ angular.module('ngBoilerplate.home', [
     }
     this.busy = true;
 
-    $http.get('http://localhost:3000/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
+    $http.get(apiServerRoot + '/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
+    //$http.get('https://fb-bbs-server.herokuapp.com/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
     .success(function(data) {
       console.log(data);
       for (var i = 0; i < data.length; i++) {

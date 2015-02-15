@@ -8,6 +8,9 @@ angular.module( 'ngBoilerplate', [
   'ngFacebook'
 ])
 
+//.constant('apiServerRoot',  'http://localhost:3000')
+.constant('apiServerRoot', 'https://fb-bbs-server.herokuapp.com')
+
 .config( function myAppConfig ($stateProvider, $urlRouterProvider, $facebookProvider, $httpProvider) {
   $urlRouterProvider.otherwise( '/home' );
 
@@ -56,7 +59,7 @@ angular.module( 'ngBoilerplate', [
   }(document, 'script', 'facebook-jssdk'));
 })
 
-.controller('AppCtrl', function AppCtrl ( $scope, $location, $facebook, $http, $modal) {
+.controller('AppCtrl', function AppCtrl ( $scope, $location, $facebook, $http, $modal, apiServerRoot) {
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     if ( angular.isDefined(toState.data.pageTitle ) ) {
       $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate' ;
@@ -82,7 +85,7 @@ console.log(response);
         $scope.profile_img_url = "https://graph.facebook.com/" + response.id + "/picture";
         $scope.isLoggedIn = true;
 
-        $http.post('http://localhost:3000/users.json', {
+        $http.post(apiServerRoot + '/users.json', {
           user: {
             fb_id: response.id,
             name: response.name,
@@ -114,7 +117,8 @@ console.log(response);
   }
 
   $scope.fetchTopics = function() {
-    $http.get('http://localhost:3000/topics.json').success(function(data) {
+    $http.get(apiServerRoot + '/topics.json').success(function(data) {
+    //$http.get('https://fb-bbs-server.herokuapp.com/topics.json').success(function(data) {
       $scope.topics = data;
       $scope.isTopicPresent = (data.length > 0);
     })

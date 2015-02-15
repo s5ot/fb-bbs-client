@@ -28,7 +28,13 @@
           <p>ユーザーID:{{post.user.fb_id}}</p>
           <p>投稿日時: {{post.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
           <p class="list-group-item-text">{{post.content}}</p>
-          <img ng-src="http://localhost:3000/{{post.img_id}}.jpg" ng-show="post.img_id" />
+
+          <img ng-src="{{post.img_url}}" ng-show="post.img_url" />
+
+          <!--
+          <img ng-src="https://fb-bbs-server.herokuapp.com/{{post.img_id}}.jpg" ng-show="post.img_id" />
+          -->
+
         </div>
       </div>
 
