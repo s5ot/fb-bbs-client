@@ -2,6 +2,7 @@ angular.module( 'ngBoilerplate', [
   'templates-app',
   'templates-common',
   'ngBoilerplate.home',
+  'ngBoilerplate.detail',
   'ngBoilerplate.about',
   'ui.router',
   'ngFacebook'
@@ -9,6 +10,28 @@ angular.module( 'ngBoilerplate', [
 
 .config( function myAppConfig ($stateProvider, $urlRouterProvider, $facebookProvider, $httpProvider) {
   $urlRouterProvider.otherwise( '/home' );
+
+  $stateProvider.state('home', {
+    url: '/home',
+    views: {
+      "main": {
+        controller: 'HomeCtrl',
+        templateUrl: 'home/home.tpl.html'
+      }
+    },
+    data:{ pageTitle: 'Home' }
+  });
+
+  $stateProvider.state('detail', {
+    url: '/topics/{topicId:[0-9]{1,4}}',
+    views: {
+      "main": {
+        controller: 'DetailCtrl',
+        templateUrl: 'detail/detail.tpl.html'
+      }
+    },
+    data:{ pageTitle: 'Home' }
+  });
 
   $facebookProvider.setAppId('778121218942102');
   $facebookProvider.setCustomInit({
@@ -35,7 +58,7 @@ angular.module( 'ngBoilerplate', [
 
 .controller('AppCtrl', function AppCtrl ( $scope, $location, $facebook, $http, $modal) {
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-    if ( angular.isDefined( toState.data.pageTitle ) ) {
+    if ( angular.isDefined(toState.data.pageTitle ) ) {
       $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate' ;
     }
   });
@@ -55,9 +78,26 @@ angular.module( 'ngBoilerplate', [
       function(response) {
 console.log(response);
         $scope.userId = response.id;
-        $scope.welcomeMsg = "Welcome, " + response.first_name;
+        $scope.welcomeMsg = "Welcome, " + response.name;
         $scope.profile_img_url = "https://graph.facebook.com/" + response.id + "/picture";
         $scope.isLoggedIn = true;
+
+        $http.post('http://localhost:3000/users.json', {
+          user: {
+            fb_id: response.id,
+            name: response.name,
+            sex: response.gender,
+            profile_img_url: $scope.profile_img_url
+          }
+        }).
+        success(function(data, status, headers, config) {
+          console.error(data);
+          $scope.fbId = data.fb_id;
+          $scope.userId = data.id;
+        }).
+        error(function(data, status, headers, config) {
+          console.error(data);
+        });
       },
       function(err) {
         $scope.welcomeMsg = "Please log in";
@@ -76,6 +116,7 @@ console.log(response);
   $scope.fetchTopics = function() {
     $http.get('http://localhost:3000/topics.json').success(function(data) {
       $scope.topics = data;
+      $scope.isTopicPresent = (data.length > 0);
     })
     .error(function(data) {
       console.error(data);

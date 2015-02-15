@@ -51,7 +51,7 @@
             <span class="icon-bar"></span>
           </button>
           <div class="navbar-brand">
-            画像掲示板
+            <a ui-sref="home">画像掲示板</a>
             <!--
             <small>
               <a href="http://github.com/ngbp/ngbp/blob/v<%= version %>-release/CHANGELOG.md">
@@ -62,41 +62,6 @@
           </div>
         </div>
         <div class="collapse navbar-collapse" collapse="menuCollapsed">
-          <ul class="nav navbar-nav navbar-left">
-            <!--
-            <li ui-sref-active="active">
-              <a href ui-sref="home">
-                <i class="fa fa-home"></i>
-                Home
-              </a>
-            </li>
-            <li ui-sref-active="active">
-              <a href ui-sref="about">
-                <i class="fa fa-info-circle"></i>
-                What is it?
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp#readme">
-                <i class="fa fa-book"></i>
-                Read the Docs
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp">
-                <i class="fa fa-github-alt"></i>
-                Github
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp/issues">
-                <i class="fa fa-comments"></i>
-                Support
-              </a>
-            </li>
-            -->
-          </ul>
-
           <form class="navbar-form navbar-right" role="login">
             <button type="button" class="btn btn-primary" ng-show="!isLoggedIn" ng-click="login()">Login with Facebook</button>
             <button type="button" class="btn btn-primary" ng-show="isLoggedIn" ng-click="logout()">Logout from Facebook</button>
@@ -116,32 +81,5 @@
 
     <div class="container" ui-view="main"></div>
 
-    <div class="container" ng-controller="TopicCtrl">
-      <h3>スレッド作成</h3>
-      <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <form>
-              <div class="form-group">
-                <label>タイトル</label>
-                <input type="text" class="form-control" placeholder="タイトル" ng-model="topicTitle" />
-                <label>コメント</label>
-                <textarea class="form-control" placeholder="一言どうぞ" rows="3" ng-model="newTopicPostContent"></textarea>
-              </div>
-              <div class="form-group">
-                <button type="button" class="btn btn-default" ng-disabled="!isLoggedIn" ng-click="openAlbum('lg')">Facebookから画像選択</button>
-              </div>
-              <div class="form-group">
-                <img ng-src={{choosedPhoto.picture}} ng-show="choosedPhoto"/>
-              </div>
-              <div class="form-group">
-                <button type="button" class="btn btn-primary" ng-disabled="!isLoggedIn" ng-click="createTopic(topicTitle, newTopicPostContent)">スレッド作成</button>
-                <p class="help-block" ng-hide="isLoggedIn">作成するにはFacebookログインが必要です</p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
   </body>
 </html>
