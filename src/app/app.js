@@ -79,7 +79,6 @@ angular.module( 'ngBoilerplate', [
   function refresh() {
     $facebook.api("/me").then(
       function(response) {
-console.log(response);
         $scope.userId = response.id;
         $scope.welcomeMsg = "Welcome, " + response.name;
         $scope.profile_img_url = "https://graph.facebook.com/" + response.id + "/picture";
@@ -118,7 +117,6 @@ console.log(response);
 
   $scope.fetchTopics = function() {
     $http.get(apiServerRoot + '/topics.json').success(function(data) {
-    //$http.get('https://fb-bbs-server.herokuapp.com/topics.json').success(function(data) {
       $scope.topics = data;
       $scope.isTopicPresent = (data.length > 0);
     })

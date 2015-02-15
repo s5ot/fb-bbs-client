@@ -12,7 +12,6 @@ angular.module('ngBoilerplate.detail', [
     console.log('fetchPosts');
 
     $http.get(apiServerRoot + '/topics/' + $stateParams.topicId + '.json')
-    //$http.get('https://fb-bbs-server.herokuapp.com/topics/' + $stateParams.topicId + '.json')
     .success(function(data) {
       $scope.topic = data;
     })
@@ -97,7 +96,7 @@ angular.module('ngBoilerplate.detail', [
     });
   };
 })
-.factory('Reddit', function($http) {
+.factory('Reddit', function($http, apiServerRoot) {
   var Reddit = function(topicId) {
     this.topicId = topicId;
     this.page = 1;
@@ -113,7 +112,6 @@ angular.module('ngBoilerplate.detail', [
     this.busy = true;
 
     $http.get(apiServerRoot + '/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
-    //$http.get('https://fb-bbs-server.herokuapp.com/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
     .success(function(data) {
       console.log(data);
       for (var i = 0; i < data.length; i++) {

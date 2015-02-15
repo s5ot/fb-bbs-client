@@ -293,11 +293,7 @@ angular.module("detail/detail.tpl.html", []).run(["$templateCache", function($te
     "            <p>ユーザーID:{{post.user.fb_id}}</p>\n" +
     "            <p>投稿日時: {{post.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>\n" +
     "            <p class=\"list-group-item-text\">{{post.content}}</p>\n" +
-    "\n" +
     "            <img ng-src=\"{{post.img_url}}\" ng-show=\"post.img_url\" />\n" +
-    "            <!--\n" +
-    "            <img ng-src=\"https://fb-bbs-server.herokuapp.com/{{post.img_id}}.jpg\" ng-show=\"post.img_id\" />\n" +
-    "            -->\n" +
     "          </div>\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -406,13 +402,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "          <p>ユーザーID:{{post.user.fb_id}}</p>\n" +
     "          <p>投稿日時: {{post.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>\n" +
     "          <p class=\"list-group-item-text\">{{post.content}}</p>\n" +
-    "\n" +
     "          <img ng-src=\"{{post.img_url}}\" ng-show=\"post.img_url\" />\n" +
-    "\n" +
-    "          <!--\n" +
-    "          <img ng-src=\"https://fb-bbs-server.herokuapp.com/{{post.img_id}}.jpg\" ng-show=\"post.img_id\" />\n" +
-    "          -->\n" +
-    "\n" +
     "        </div>\n" +
     "      </div>\n" +
     "\n" +
