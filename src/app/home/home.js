@@ -38,7 +38,6 @@ angular.module('ngBoilerplate.home', [
     var imgUrl = $scope.choosedPhoto ? $scope.choosedPhoto.picture : '';
     var imgId = $scope.choosedPhoto ? $scope.choosedPhoto.id : '';
     $http.post(apiServerRoot + '/topics.json', {
-    //$http.post('https://fb-bbs-server.herokuapp.com/topics.json', {
       topic: {
         title: topicTitle,
         user_id: $scope.userId,
@@ -113,7 +112,6 @@ angular.module('ngBoilerplate.home', [
     console.log('fetchPosts');
 
     $http.get(apiServerRoot + '/topics/' + $scope.topicId + '.json')
-    //$http.get('https://fb-bbs-server.herokuapp.com/topics/' + $scope.topicId + '.json')
     .success(function(data) {
       $scope.topic = data;
     })
@@ -172,7 +170,6 @@ angular.module('ngBoilerplate.home', [
       var imgId = photo ? photo.id : '';
 
       $http.post(apiServerRoot + '/posts.json', {
-      //$http.post('https://fb-bbs-server.herokuapp.com/posts.json', {
         post: {
         topic_id: $scope.topicId,
         content: $scope.postContent,
@@ -204,7 +201,6 @@ angular.module('ngBoilerplate.home', [
     var imgId = $scope.choosedPhoto ? $scope.choosedPhoto.id : '';
 
     $http.post(apiServerRoot + '/topics.json', {
-    //$http.post('https://fb-bbs-server.herokuapp.com/topics.json', {
       topic: {
         title: topicTitle,
         user_id: $scope.userId,
@@ -246,7 +242,6 @@ angular.module('ngBoilerplate.home', [
     this.busy = true;
 
     $http.get(apiServerRoot + '/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
-    //$http.get('https://fb-bbs-server.herokuapp.com/posts.json?' + 'topic_id=' + this.topicId + '&page=' + this.page)
     .success(function(data) {
       console.log(data);
       for (var i = 0; i < data.length; i++) {
