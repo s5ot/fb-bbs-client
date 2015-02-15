@@ -59,10 +59,10 @@ angular.module( 'ngBoilerplate', [
   }(document, 'script', 'facebook-jssdk'));
 })
 
-.controller('AppCtrl', function AppCtrl ( $scope, $location, $facebook, $http, $modal, apiServerRoot) {
+.controller('AppCtrl', function AppCtrl ( $scope, $facebook, $http, $modal, apiServerRoot) {
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     if ( angular.isDefined(toState.data.pageTitle ) ) {
-      $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate' ;
+      $scope.pageTitle = toState.data.pageTitle + ' | fb-bbs' ;
     }
   });
 
