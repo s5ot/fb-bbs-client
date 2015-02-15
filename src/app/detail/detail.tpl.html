@@ -5,39 +5,41 @@
 <h3>スレッド詳細</h3>
 
 <div class="row">
-  <div class="panel panel-default" ng-controller="TopicCtrl">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{topic.title}}</h3>
-    </div>
-    <div class="panel-body">
-      <p>ユーザーID: {{topic.user.fb_id}}</p>
-      <p>作成日時: {{topic.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{topic.title}}</h3>
+      </div>
+      <div class="panel-body">
+        <p>ユーザーID: {{topic.user.fb_id}}</p>
+        <p>作成日時: {{topic.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
 
-      <div class="list-group posts">
-        <div class="list-group-item" ng-repeat="post in topic.posts">
-          <p>ユーザーID:{{post.user.fb_id}}</p>
-          <p>投稿日時: {{post.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
-          <p class="list-group-item-text">{{post.content}}</p>
-          <img ng-src="http://localhost:3000/{{post.img_id}}.jpg" ng-show="post.img_id" />
+        <div class="list-group posts">
+          <div class="list-group-item" ng-repeat="post in reddit.items">
+            <p>ユーザーID:{{post.user.fb_id}}</p>
+            <p>投稿日時: {{post.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            <p class="list-group-item-text">{{post.content}}</p>
+            <img ng-src="http://localhost:3000/{{post.img_id}}.jpg" ng-show="post.img_id" />
+          </div>
         </div>
       </div>
-
-      <form>
-        <div class="form-group">
-          <label>コメント</label>
-          <textarea class="form-control" placeholder="一言どうぞ" rows="3" ng-model="postContent"></textarea>
-        </div>
-        <div class="form-group">
-          <button type="button" class="btn btn-default" ng-disabled="!isLoggedIn" ng-click="openAlbum('lg')">Facebookから画像選択</button>
-        </div>
-        <div class="form-group">
-          <img ng-src={{choosedPhoto.picture}} />
-        </div>
-        <div class="form-group">
-          <button type="button" class="btn btn-primary" ng-disabled="!isLoggedIn" ng-click="confirmPost(topic.id, postContent)">書き込む</button>
-          <p class="help-block" ng-hide="isLoggedIn">書き込むにはFacebookログインが必要です</p>
-        </div>
-      </form>
     </div>
   </div>
+
+  <form>
+    <div class="form-group">
+      <label>コメント</label>
+      <textarea class="form-control" placeholder="一言どうぞ" rows="3" ng-model="postContent"></textarea>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-default" ng-disabled="!isLoggedIn" ng-click="openAlbum('lg')">Facebookから画像選択</button>
+    </div>
+    <div class="form-group">
+      <img ng-src={{choosedPhoto.picture}} />
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" ng-disabled="!isLoggedIn" ng-click="confirmPost(topicId, postContent)">書き込む</button>
+      <p class="help-block" ng-hide="isLoggedIn">書き込むにはFacebookログインが必要です</p>
+    </div>
+  </form>
 </div>
