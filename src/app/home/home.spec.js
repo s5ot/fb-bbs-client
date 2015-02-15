@@ -1,14 +1,17 @@
-/**
- * Tests sit right alongside the file they are testing, which is more intuitive
- * and portable than separating `src` and `test` directories. Additionally, the
- * build process will exclude all `.spec.js` files from the build
- * automatically.
- */
 describe( 'home section', function() {
-  beforeEach( module( 'ngBoilerplate.home' ) );
+  var HomeCtrl, $scope;
 
-  it( 'should have a dummy test', inject( function() {
-    expect( true ).toBeTruthy();
+  beforeEach( module( 'ngBoilerplate' ) );
+  beforeEach( module( 'ngBoilerplate.home' ) );
+  beforeEach( module( 'ui.bootstrap' ) );
+
+  beforeEach( inject( function( $controller, $rootScope, $http, $modal, $log, $facebook, apiServerRoot) {
+    $scope = $rootScope.$new();
+    HomeCtrl = $controller( 'HomeCtrl', { $scope: $scope, $http: $http, $model: $modal, $log: $log, $facebook: $facebook, apiServerRoot: apiServerRoot});
   }));
+
+  it('can be initialized', function() {
+    expect( HomeCtrl ).toBeTruthy();
+  });
 });
 
